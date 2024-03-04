@@ -16,6 +16,6 @@ Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/auth/user', [AuthController::class, 'user']);
         Route::get('/auth/logout', [AuthController::class, 'logout']);
-        Route::apiResource('/auth/observations', [ObservationController::class]);
+        Route::apiResource('/auth/observations', ObservationController::class);
     }
 );
