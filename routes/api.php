@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ObservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +16,6 @@ Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/auth/user', [AuthController::class, 'user']);
         Route::get('/auth/logout', [AuthController::class, 'logout']);
+        Route::apiResource('/auth/observations', [ObservationController::class]);
     }
 );

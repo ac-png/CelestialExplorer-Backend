@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('location_id');
-            $table->string('celestial_body_name');
-            $table->string('celestial_body_type');
+            $table->string('celestial_body_id');
             $table->date('date');
             $table->time('time');
             $table->string('sky_conditions');
