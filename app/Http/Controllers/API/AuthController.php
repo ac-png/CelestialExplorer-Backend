@@ -22,7 +22,6 @@ class AuthController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                // create the JSON that will be returned in the response
                 return response()->json(
                     [
                         'status' => 'Error',
@@ -32,7 +31,6 @@ class AuthController extends Controller
                     422
                 );
             }
-            // If you get this far, validation passed, so create the user in the database.
             $user = User::create(
                 [
                     'name' => $request->name,
