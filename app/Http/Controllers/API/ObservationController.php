@@ -7,6 +7,7 @@ use App\Http\Resources\ObservationCollection;
 use App\Http\Resources\ObservationResource;
 use App\Models\Observation;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ObservationController extends Controller
 {
@@ -49,8 +50,13 @@ class ObservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Observation $observation)
     {
-        //
+        try {
+            $observation->delete(); // Delete the observation instance from the database
+            return response()->json(['message' => 'Observation deleted successfully'], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An unexpected error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
