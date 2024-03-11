@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ObservationCollection;
+use App\Http\Resources\ObservationResource;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,11 @@ class ObservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $observation = Observation::create($request->only([
+            'user_id', 'location_id', 'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
+        ]));
+
+        return new ObservationResource($observation);
     }
 
     /**

@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Observation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'location_id',
+        'celestial_body_id',
+        'date',
+        'time',
+        'sky_conditions',
+        'description',
+        'rating',
+    ];
 }
