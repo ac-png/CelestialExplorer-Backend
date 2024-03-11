@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resource\ObservationCollection;
+use App\Http\Resources\ObservationCollection;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 
