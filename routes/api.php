@@ -18,6 +18,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/auth/observations/{uuid}', [ObservationController::class, 'showByUUID']);
     Route::delete('/auth/observations/{uuid}', [ObservationController::class, 'destroyByUUID']);
+    Route::put('/auth/observations/{uuid}', [ObservationController::class, 'updateByUUID']);
+    Route::get('/auth/observations/body/{id}', [ObservationController::class, 'indexByBodyAndUser']);
+
 
     Route::apiResource('/auth/observations', ObservationController::class);
 });

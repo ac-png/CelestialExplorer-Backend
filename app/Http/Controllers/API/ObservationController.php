@@ -8,6 +8,7 @@ use App\Http\Resources\ObservationResource;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ObservationController extends Controller
@@ -20,6 +21,19 @@ class ObservationController extends Controller
         return new ObservationCollection(Observation::all());
     }
 
+    public function indexByBody($id)
+    {
+        return new ObservationCollection(Observation::where('celestial_body_id', $id)->get());
+    }
+
+    public function indexByBodyAndUser($id)
+    {
+        return new ObservationCollection(Observation::where([
+            ['celestial_body_id', '=', $id],
+            ['user_id', '=', Auth::id()],
+        ])->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -27,8 +41,14 @@ class ObservationController extends Controller
     public function store(Request $request)
     {
         $data = $request->only([
-            'user_id', 'location_id', 'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
+            'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
         ]);
+
+        $data['user_id'] = Auth::id();
+        $data['location_id'] = 4;
+        // $data['date'] = date('Y-m-d', strtotime($data['date']));
+        // $data['time'] = date('H:i:s', strtotime($data['time']));
+
 
         $data['uuid'] = Str::uuid();
 
@@ -49,7 +69,7 @@ class ObservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateByUUID(Request $request, string $id)
     {
         //
     }
