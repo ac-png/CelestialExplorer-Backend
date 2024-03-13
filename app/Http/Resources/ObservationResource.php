@@ -15,6 +15,7 @@ class ObservationResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid,
             'user_id' => $this->user_id,
             'location_id' => $this->location_id,
             'celestial_body_id' => $this->celestial_body_id,

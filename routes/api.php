@@ -12,10 +12,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(
-    function () {
-        Route::get('/auth/user', [AuthController::class, 'user']);
-        Route::get('/auth/logout', [AuthController::class, 'logout']);
-        Route::apiResource('/auth/observations', ObservationController::class);
-    }
-);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/auth/user', [AuthController::class, 'user']);
+    Route::get('/auth/logout', [AuthController::class, 'logout']);
+
+    Route::get('/auth/observations/{uuid}', [ObservationController::class, 'showByUUID']);
+    Route::delete('/auth/observations/{uuid}', [ObservationController::class, 'destroyByUUID']);
+
+    Route::apiResource('/auth/observations', ObservationController::class);
+});

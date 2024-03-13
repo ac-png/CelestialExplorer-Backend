@@ -40,8 +40,9 @@ class ObservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Observation $observation)
+    public function showByUUID($uuid)
     {
+        $observation = Observation::where('uuid', $uuid)->firstOrFail();
         return new ObservationResource($observation);
     }
 
@@ -56,9 +57,10 @@ class ObservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Observation $observation)
+    public function destroyByUUID($uuid)
     {
         try {
+            $observation = Observation::where('uuid', $uuid)->firstOrFail();
             $observation->delete();
             return response()->json(['message' => 'Observation deleted successfully'], Response::HTTP_OK);
         } catch (\Exception $e) {
