@@ -21,17 +21,23 @@ class ObservationController extends Controller
         return new ObservationCollection(Observation::all());
     }
 
-    public function indexByBody($id)
-    {
-        return new ObservationCollection(Observation::where('celestial_body_id', $id)->get());
-    }
-
     public function indexByBodyAndUser($id)
     {
         return new ObservationCollection(Observation::where([
             ['celestial_body_id', '=', $id],
             ['user_id', '=', Auth::id()],
         ])->get());
+    }
+
+    public function indexByUser()
+    {
+        $observations = Observation::where('user_id', '=', Auth::id())->get();
+
+        if ($observations->isEmpty()) {
+            return response()->json(['message' => 'No observations found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new ObservationCollection($observations);
     }
 
     /**
@@ -46,9 +52,6 @@ class ObservationController extends Controller
 
         $data['user_id'] = Auth::id();
         $data['location_id'] = 4;
-        // $data['date'] = date('Y-m-d', strtotime($data['date']));
-        // $data['time'] = date('H:i:s', strtotime($data['time']));
-
 
         $data['uuid'] = Str::uuid();
 
