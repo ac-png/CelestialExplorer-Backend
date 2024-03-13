@@ -8,6 +8,7 @@ use App\Http\Resources\ObservationResource;
 use App\Models\Observation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class ObservationController extends Controller
 {
@@ -22,11 +23,16 @@ class ObservationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $observation = Observation::create($request->only([
+        $data = $request->only([
             'user_id', 'location_id', 'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
-        ]));
+        ]);
+
+        $data['uuid'] = Str::uuid();
+
+        $observation = Observation::create($data);
 
         return new ObservationResource($observation);
     }
@@ -53,7 +59,7 @@ class ObservationController extends Controller
     public function destroy(Observation $observation)
     {
         try {
-            $observation->delete(); // Delete the observation instance from the database
+            $observation->delete();
             return response()->json(['message' => 'Observation deleted successfully'], Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An unexpected error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -10,6 +10,7 @@ class Observation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'uuid',
         'user_id',
         'location_id',
         'celestial_body_id',
