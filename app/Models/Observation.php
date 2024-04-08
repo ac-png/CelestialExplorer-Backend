@@ -19,5 +19,7 @@ class Observation extends Model
         'sky_conditions',
         'description',
         'rating',
+        'latitude',
+        'longitude',
     ];
 }

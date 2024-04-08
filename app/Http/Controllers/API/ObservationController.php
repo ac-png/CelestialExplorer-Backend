@@ -47,11 +47,10 @@ class ObservationController extends Controller
     public function store(Request $request)
     {
         $data = $request->only([
-            'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
+            'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating', 'latitude', 'longitude'
         ]);
 
         $data['user_id'] = Auth::id();
-        $data['location_id'] = 4;
 
         $data['uuid'] = Str::uuid();
 
@@ -78,7 +77,7 @@ class ObservationController extends Controller
             $observation = Observation::where('uuid', $uuid)->firstOrFail();
 
             $data = $request->only([
-                'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
+                'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating', 'latitude', 'longitude'
             ]);
 
             $observation->update($data);

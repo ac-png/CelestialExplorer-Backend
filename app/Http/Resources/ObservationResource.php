@@ -18,13 +18,14 @@ class ObservationResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'user_id' => $this->user_id,
-            'location_id' => $this->location_id,
             'celestial_body_id' => $this->celestial_body_id,
             'date' => $this->date,
             'time' => $this->time,
             'sky_conditions' => $this->sky_conditions,
             'description' => $this->description,
             'rating' => $this->rating,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
     }
 }
