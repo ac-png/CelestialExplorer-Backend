@@ -72,9 +72,21 @@ class ObservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateByUUID(Request $request, string $id)
+    public function updateByUUID(Request $request, string $uuid)
     {
-        //
+        try {
+            $observation = Observation::where('uuid', $uuid)->firstOrFail();
+
+            $data = $request->only([
+                'celestial_body_id', 'date', 'time', 'sky_conditions', 'description', 'rating'
+            ]);
+
+            $observation->update($data);
+
+            return new ObservationResource($observation);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An unexpected error occurred'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
